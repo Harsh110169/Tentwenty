@@ -1,22 +1,425 @@
-   <section class="py-20 md:py-32 min-h-screen flex flex-col items-center justify-center">
-       
-        <div class="text-center max-w-2xl px-6" id="text-section">
-            <h2 id="title" class="section-title text-4xl md:text-5xl mb-6 opacity-0 translate-y-10 transition-all duration-1000 ease-out">
-                Quality Products
-            </h2>
-            <p id="desc" class="text-gray-500 text-sm md:text-base leading-relaxed opacity-0 translate-y-10 transition-all duration-1000 ease-out delay-300">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-            </p>
-        </div>
+{% schema %}
+{
+  "name": "Quality Products Slider",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Quality Products"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Slide Image"
+        },
+        {
+          "type": "text",
+          "id": "client_name",
+          "label": "Client Name",
+          "default": "Client Name"
+        },
+        {
+          "type": "text",
+          "id": "client_location",
+          "label": "Client Location",
+          "default": "Dubai, United Arab Emirates"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Quality Products Slider"
+    }
+  ]
+}
+{% endschema %}
 
-       
-        <div class="slider-container" id="slider">
-           
-        </div>
+<section class="quality-slider-section">
+  <div class="page-width">
+    
+    <!-- Text Section -->
+    <div class="text-section" id="text-section-{{ section.id }}">
+      <h2 id="title-{{ section.id }}" class="section-title">
+        {{ section.settings.heading }}
+      </h2>
 
-        
-        <div class="text-center mt-12 md:mt-16 h-20">
-            <h3 id="client-name" class="text-lg md:text-xl font-semibold mb-1 text-gray-900 transition-opacity duration-300">Client 1</h3>
-            <p id="client-loc" class="text-gray-500 text-sm transition-opacity duration-300">Dubai, United Arab Emirates</p>
+      <p id="desc-{{ section.id }}" class="section-desc">
+        {{ section.settings.description }}
+      </p>
+    </div>
+
+    <!-- Slider -->
+    <div class="slider-container" id="slider-{{ section.id }}">
+
+      {% for block in section.blocks %}
+        <div class="card" {{ block.shopify_attributes }}>
+          
+          {% if block.settings.image != blank %}
+            {{
+              block.settings.image
+              | image_url: width: 1000
+              | image_tag:
+                loading: 'lazy',
+                alt: block.settings.client_name
+            }}
+          {% endif %}
+
+          <div class="drag-circle">Drag</div>
+
         </div>
-    </section>
+      {% endfor %}
+
+    </div>
+
+    <!-- Bottom Info -->
+    <div class="info-section">
+      <h3 id="client-name-{{ section.id }}">
+        {% if section.blocks.size > 0 %}
+          {{ section.blocks.first.settings.client_name }}
+        {% endif %}
+      </h3>
+
+      <p id="client-loc-{{ section.id }}">
+        {% if section.blocks.size > 0 %}
+          {{ section.blocks.first.settings.client_location }}
+        {% endif %}
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .quality-slider-section {
+    background: #f8f9fa;
+    padding: 100px 0;
+    overflow: hidden;
+  }
+
+  .quality-slider-section .page-width {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .text-section {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .section-title {
+    font-size: 48px;
+    font-weight: 400;
+    color: #111;
+    margin-bottom: 20px;
+  }
+
+  .section-desc {
+    color: #666;
+    line-height: 1.7;
+    font-size: 16px;
+  }
+
+  .slider-container {
+    position: relative;
+    width: 100%;
+    height: 520px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+    touch-action: pan-y;
+  }
+
+  .card {
+    position: absolute;
+    width: 320px;
+    height: 480px;
+    overflow: hidden;
+    border-radius: 6px;
+    background: #fff;
+    cursor: grab;
+    will-change: transform;
+    transition:
+      transform 0.6s cubic-bezier(0.25, 1, 0.5, 1),
+      opacity 0.6s ease;
+  }
+
+  .card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    user-select: none;
+    pointer-events: none;
+  }
+
+  .drag-circle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: translate(-50%, -50%) scale(0);
+    transition: 0.3s ease;
+    font-size: 14px;
+    font-weight: 500;
+    pointer-events: none;
+  }
+
+  .info-section {
+    text-align: center;
+    margin-top: 50px;
+  }
+
+  .info-section h3 {
+    font-size: 24px;
+    margin-bottom: 5px;
+    color: #111;
+  }
+
+  .info-section p {
+    color: #777;
+  }
+
+  @media screen and (max-width: 767px) {
+    .quality-slider-section {
+      padding: 70px 0;
+    }
+
+    .section-title {
+      font-size: 34px;
+    }
+
+    .slider-container {
+      height: 400px;
+    }
+
+    .card {
+      width: 240px;
+      height: 340px;
+    }
+  }
+</style>
+
+<script>
+  (() => {
+
+    const sectionId = "{{ section.id }}";
+
+    const slider = document.getElementById(`slider-${sectionId}`);
+    const cards = slider.querySelectorAll('.card');
+
+    const slidesData = [
+      {% for block in section.blocks %}
+        {
+          name: `{{ block.settings.client_name }}`,
+          loc: `{{ block.settings.client_location }}`
+        }{% unless forloop.last %},{% endunless %}
+      {% endfor %}
+    ];
+
+    let currentIndex = 0;
+
+    const getKf = () => {
+      const isMobile = window.innerWidth < 768;
+
+      return {
+        '-2': { x: isMobile ? -140 : -160, r: -20, s: 0.8, o: 0 },
+        '-1': { x: isMobile ? -70 : -80, r: -10, s: 0.92, o: 1 },
+        '0': { x: 0, r: 0, s: 1, o: 1 },
+        '1': { x: isMobile ? 70 : 80, r: 10, s: 0.92, o: 1 },
+        '2': { x: isMobile ? 140 : 160, r: 20, s: 0.8, o: 0 }
+      };
+    };
+
+    function lerp(start, end, t) {
+      return start + (end - start) * t;
+    }
+
+    function getStyle(pos) {
+
+      const kf = getKf();
+
+      if (pos <= -2) return kf['-2'];
+      if (pos >= 2) return kf['2'];
+
+      let lower = Math.floor(pos);
+      let upper = Math.ceil(pos);
+
+      if (lower === upper) return kf[lower];
+
+      let t = pos - lower;
+
+      let k1 = kf[lower];
+      let k2 = kf[upper];
+
+      return {
+        x: lerp(k1.x, k2.x, t),
+        r: lerp(k1.r, k2.r, t),
+        s: lerp(k1.s, k2.s, t),
+        o: lerp(k1.o, k2.o, t)
+      };
+    }
+
+    function updateCards() {
+
+      cards.forEach((card, i) => {
+
+        let rel = i - currentIndex;
+
+        let style = getStyle(rel);
+
+        card.style.transform =
+          `translateX(${style.x}%) rotate(${style.r}deg) scale(${style.s})`;
+
+        card.style.opacity = style.o;
+
+        card.style.zIndex = 10 - Math.abs(rel);
+
+        const circle = card.querySelector('.drag-circle');
+
+        if (rel === 0) {
+
+          card.onmouseenter = () => {
+            circle.style.transform =
+              'translate(-50%, -50%) scale(1)';
+          };
+
+          card.onmouseleave = () => {
+            circle.style.transform =
+              'translate(-50%, -50%) scale(0)';
+          };
+
+        } else {
+
+          circle.style.transform =
+            'translate(-50%, -50%) scale(0)';
+        }
+      });
+
+      const nameEl =
+        document.getElementById(`client-name-${sectionId}`);
+
+      const locEl =
+        document.getElementById(`client-loc-${sectionId}`);
+
+      nameEl.innerText = slidesData[currentIndex].name;
+      locEl.innerText = slidesData[currentIndex].loc;
+    }
+
+    // Drag Logic
+
+    let isDragging = false;
+    let startX = 0;
+    let currentX = 0;
+
+    slider.addEventListener('mousedown', dragStart);
+    slider.addEventListener('touchstart', dragStart, { passive: true });
+
+    window.addEventListener('mousemove', dragMove);
+    window.addEventListener('touchmove', dragMove, { passive: false });
+
+    window.addEventListener('mouseup', dragEnd);
+    window.addEventListener('touchend', dragEnd);
+
+    function dragStart(e) {
+
+      isDragging = true;
+
+      startX =
+        e.type.includes('mouse')
+          ? e.pageX
+          : e.touches[0].clientX;
+
+      currentX = startX;
+    }
+
+    function dragMove(e) {
+
+      if (!isDragging) return;
+
+      const newX =
+        e.type.includes('mouse')
+          ? e.pageX
+          : e.touches[0].clientX;
+
+      const diff = newX - startX;
+
+      currentX = newX;
+
+      const threshold =
+        window.innerWidth < 768 ? 200 : 350;
+
+      let progress = diff / threshold;
+
+      cards.forEach((card, i) => {
+
+        let rel = i - currentIndex;
+
+        let pos = rel + progress;
+
+        let style = getStyle(pos);
+
+        card.style.transition = 'none';
+
+        card.style.transform =
+          `translateX(${style.x}%) rotate(${style.r}deg) scale(${style.s})`;
+
+        card.style.opacity = style.o;
+      });
+    }
+
+    function dragEnd() {
+
+      if (!isDragging) return;
+
+      isDragging = false;
+
+      let diff = currentX - startX;
+
+      const threshold =
+        window.innerWidth < 768 ? 50 : 100;
+
+      if (diff > threshold && currentIndex > 0) {
+        currentIndex--;
+      }
+      else if (diff < -threshold && currentIndex < cards.length - 1) {
+        currentIndex++;
+      }
+
+      cards.forEach(card => {
+        card.style.transition =
+          'transform 0.6s cubic-bezier(0.25,1,0.5,1), opacity 0.6s ease';
+      });
+
+      updateCards();
+    }
+
+    updateCards();
+
+    window.addEventListener('resize', () => {
+      updateCards();
+    });
+
+  })();
+</script>
