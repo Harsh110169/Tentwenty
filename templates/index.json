@@ -53,9 +53,31 @@
       ],
       "name": "Split Slider",
       "settings": {}
+    },
+    "image_slider_yX4Jb9": {
+      "type": "image-slider",
+      "blocks": {
+        "slide_cmwwgF": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/07910f7f188a8f483ded59346fe0fd6d10d14b9a.png",
+            "client_name": "Client Name 1",
+            "client_location": "Dubai, United Arab Emirates"
+          }
+        }
+      },
+      "block_order": [
+        "slide_cmwwgF"
+      ],
+      "name": "Quality Products Slider",
+      "settings": {
+        "heading": "Quality Products",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+      }
     }
   },
   "order": [
-    "banner_section_dhw6r4"
+    "banner_section_dhw6r4",
+    "image_slider_yX4Jb9"
   ]
 }
