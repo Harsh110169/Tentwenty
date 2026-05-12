@@ -240,7 +240,7 @@
 
     let currentIndex = 0;
 
-    const getKf = () => {
+    {% comment %} const getKf = () => {
       const isMobile = window.innerWidth < 768;
 
       return {
@@ -250,7 +250,63 @@
         '1': { x: isMobile ? 70 : 80, r: 10, s: 0.92, o: 1 },
         '2': { x: isMobile ? 140 : 160, r: 20, s: 0.8, o: 0 }
       };
-    };
+    }; {% endcomment %}
+
+
+    const getKf = () => {
+  const isMobile = window.innerWidth < 768;
+
+  return {
+    '-3': {
+      x: isMobile ? -180 : -220,
+      r: -25,
+      s: 0.7,
+      o: 0
+    },
+
+    '-2': {
+      x: isMobile ? -120 : -140,
+      r: -18,
+      s: 0.82,
+      o: 0
+    },
+
+    '-1': {
+      x: isMobile ? -55 : -65,
+      r: -10,
+      s: 0.92,
+      o: 1
+    },
+
+    '0': {
+      x: 0,
+      r: 0,
+      s: 1,
+      o: 1
+    },
+
+    '1': {
+      x: isMobile ? 55 : 65,
+      r: 10,
+      s: 0.92,
+      o: 1
+    },
+
+    '2': {
+      x: isMobile ? 120 : 140,
+      r: 18,
+      s: 0.82,
+      o: 0
+    },
+
+    '3': {
+      x: isMobile ? 180 : 220,
+      r: 25,
+      s: 0.7,
+      o: 0
+    }
+  };
+};
 
     function lerp(start, end, t) {
       return start + (end - start) * t;
