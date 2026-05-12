@@ -64,10 +64,46 @@
             "client_name": "Client Name 1",
             "client_location": "Dubai, United Arab Emirates"
           }
+        },
+        "slide_6d69TJ": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/340fac90fd6dfbaeba51d1e63c2f7abcbe67478b.png",
+            "client_name": "Client Name 2",
+            "client_location": "Dubai, United Arab Emirates"
+          }
+        },
+        "slide_FyezBV": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/f83dd14e8c68b40c5d3c7be77be84879d8d69064.png",
+            "client_name": "Client Name 3",
+            "client_location": "Dubai, United Arab Emirates"
+          }
+        },
+        "slide_PW4yKx": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/8f78f5452c06cf20973a3a45f5be4b527cd28d57.png",
+            "client_name": "Client Name 4",
+            "client_location": "Dubai, United Arab Emirates"
+          }
+        },
+        "slide_micAYw": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/00ce5eb0832ccca6bc55a736a60b7421d25e94f5.png",
+            "client_name": "Client Name 5",
+            "client_location": "Dubai, United Arab Emirates"
+          }
         }
       },
       "block_order": [
-        "slide_cmwwgF"
+        "slide_cmwwgF",
+        "slide_6d69TJ",
+        "slide_FyezBV",
+        "slide_PW4yKx",
+        "slide_micAYw"
       ],
       "name": "Quality Products Slider",
       "settings": {
