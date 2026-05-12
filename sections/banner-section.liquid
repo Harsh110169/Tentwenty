@@ -1,0 +1,642 @@
+<style>
+
+@font-face {
+  font-family: 'WorkSans';
+  src: url('https://cdn.shopify.com/s/files/1/0980/4890/1193/files/WorkSans-Regular.ttf?v=1778577208') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+body {
+  font-family: 'WorkSans', sans-serif;
+}
+    
+.split-slider{
+position:relative;
+width:100%;
+height:100vh;
+overflow:hidden;
+background:#000;
+font-family:'Inter',sans-serif;
+}
+
+/* ================= SLIDES ================= */
+
+.slider-item{
+position:absolute;
+inset:0;
+z-index:1;
+opacity:1;
+pointer-events:none;
+}
+
+.slider-item.active{
+{% comment %} z-index:3; {% endcomment %}
+pointer-events:auto;
+}
+
+.split{
+position:absolute;
+left:0;
+width:100%;
+height:50%;
+overflow:hidden;
+}
+
+.split.top{
+top:0;
+transform:translateY(-100%);
+}
+
+.split.bottom{
+bottom:0;
+transform:translateY(100%);
+}
+
+/* ===== ORIGINAL SPLIT ANIMATION ===== */
+
+.slider-item.active .split.top{
+animation:splitTop 1.2s cubic-bezier(0.77,0,0.175,1) forwards;
+}
+
+.slider-item.active .split.bottom{
+animation:splitBottom 1.2s cubic-bezier(0.77,0,0.175,1) forwards;
+}
+
+@keyframes splitTop{
+to{
+transform:translateY(0);
+}
+}
+
+@keyframes splitBottom{
+to{
+transform:translateY(0);
+}
+}
+
+/* ================= IMAGE ================= */
+
+.split-bg{
+position:absolute;
+left:0;
+width:100%;
+height:200%;
+background-size:cover;
+background-position:center;
+transform:scale(1.15);
+transition:transform 8s linear;
+will-change:transform;
+}
+
+.split.top .split-bg{
+top:0;
+}
+
+.split.bottom .split-bg{
+top:-100%;
+}
+
+.slider-item.active .split-bg{
+transform:scale(1);
+}
+
+/* ================= OVERLAY ================= */
+
+.overlay{
+position:absolute;
+inset:0;
+background:linear-gradient(to right,rgba(0,0,0,.65),rgba(0,0,0,.2));
+z-index:5;
+}
+
+/* ================= CONTENT ================= */
+
+.slider-content{
+position:absolute;
+left:6%;
+top:50%;
+transform:translateY(-50%);
+z-index:10;
+max-width:900px;
+color:#fff;
+}
+
+/* ===== SUBTITLE ===== */
+
+.subtitle{
+width:234px;
+height:24px;
+font-family:'Work Sans',sans-serif;
+font-weight:400;
+font-size:16px;
+line-height:150%;
+letter-spacing:0;
+color:#EEF4F9;
+margin-bottom:28px;
+overflow:hidden;
+text-transform:none;
+opacity:1;
+}
+
+.title{
+width:756px;
+height:128px;
+font-family:'Work Sans',sans-serif;
+font-weight:400;
+font-size:64px;
+line-height:100%;
+letter-spacing:0;
+text-transform:capitalize;
+color:#EEF4F9;
+overflow:hidden;
+margin:0;
+}
+
+.text-animate{
+display:block;
+transform:translateY(120%);
+transition:1s cubic-bezier(0.77,0,0.175,1);
+}
+
+.slider-item.active .text-animate{
+transform:translateY(0);
+}
+
+/* ================= BOTTOM ================= */
+
+.slider-bottom{
+position:absolute;
+left:6%;
+bottom:60px;
+z-index:20;
+display:flex;
+align-items:center;
+gap:40px;
+}
+
+/* ================= NEXT BUTTON ================= */
+
+.next-btn{
+position:relative;
+width:120px;
+height:120px;
+cursor:pointer;
+overflow:hidden;
+display:flex;
+align-items:center;
+justify-content:center;
+}
+
+.next-thumb{
+position:absolute;
+inset:12px;
+background-size:cover;
+background-position:center;
+transition:all .5s ease;
+}
+
+.next-overlay{
+position:absolute;
+inset:12px;
+background:rgba(0,0,0,.35);
+transition:.3s;
+}
+
+.next-btn:hover .next-overlay{
+background:rgba(0,0,0,.2);
+}
+
+.next-text{
+position:relative;
+z-index:2;
+font-size:12px;
+letter-spacing:3px;
+text-transform:uppercase;
+font-weight:600;
+color:#fff;
+}
+
+/* ================= SVG ================= */
+
+.progress-svg{
+position:absolute;
+inset:0;
+width:100%;
+height:100%;
+}
+
+/* ================= PAGINATION ================= */
+
+.pagination{
+display:flex;
+align-items:center;
+gap:24px;
+color:#fff;
+font-size:14px;
+letter-spacing:2px;
+}
+
+.pagination-line{
+width:90px;
+height:1px;
+background:rgba(255,255,255,.3);
+position:relative;
+overflow:hidden;
+}
+
+@media(max-width:768px){
+
+.title{
+font-size:52px;
+}
+
+.slider-bottom{
+left:24px;
+bottom:30px;
+gap:25px;
+}
+
+.next-btn{
+width:90px;
+height:90px;
+}
+
+.pagination-line{
+width:60px;
+}
+
+}
+
+@media(max-width:479px){
+    .title {
+    font-size: 46px;
+}
+}
+
+</style>
+
+<section class="split-slider" id="split-slider-{{ section.id }}">
+
+{% for block in section.blocks %}
+
+<div class="slider-item {% if forloop.first %}active{% endif %}" data-index="{{ forloop.index0 }}">
+
+<div class="split top">
+
+<div
+class="split-bg"
+style="background-image:url('{{ block.settings.image | image_url: width: 2200 }}')">
+</div>
+
+</div>
+
+<div class="split bottom">
+
+<div
+class="split-bg"
+style="background-image:url('{{ block.settings.image | image_url: width: 2200 }}')">
+</div>
+
+</div>
+
+<div class="overlay"></div>
+
+<div class="slider-content">
+
+<div class="subtitle">
+
+<span class="text-animate">
+{{ block.settings.subtitle }}
+</span>
+
+</div>
+
+<div class="title">
+
+<span class="text-animate">
+{{ block.settings.title }}
+</span>
+
+</div>
+
+</div>
+
+</div>
+
+{% endfor %}
+
+<div class="slider-bottom">
+
+<div class="next-btn" id="next-btn-{{ section.id }}">
+
+<div
+class="next-thumb"
+id="next-thumb-{{ section.id }}"
+style="background-image:url('{% if section.blocks.size > 1 %}{{ section.blocks[1].settings.image | image_url: width: 600 }}{% endif %}')">
+</div>
+
+<div class="next-overlay"></div>
+
+<div class="next-text">
+NEXT
+</div>
+
+<svg class="progress-svg" viewBox="0 0 120 120">
+
+<rect
+x="2"
+y="2"
+width="116"
+height="116"
+fill="none"
+stroke="rgba(255,255,255,0.2)"
+stroke-width="1"
+/>
+
+<rect
+x="2"
+y="2"
+width="116"
+height="116"
+fill="none"
+stroke="#fff"
+stroke-width="8"
+stroke-dasharray="464"
+stroke-dashoffset="464"
+id="progress-{{ section.id }}"
+transform="rotate(-90 60 60)"
+/>
+
+</svg>
+
+</div>
+
+<div class="pagination">
+
+<span id="current-{{ section.id }}">
+01
+</span>
+
+<div class="pagination-line">
+
+<div
+id="pagination-progress-{{ section.id }}"
+style="
+width:25%;
+position:absolute;
+top:0;
+left:0;
+height:100%;
+background:#fff;
+transition:all .5s ease-out;
+">
+</div>
+
+</div>
+
+<span>
+{{ section.blocks.size | prepend: '0' | slice: -2, 2 }}
+</span>
+
+</div>
+
+</div>
+
+</section>
+
+<script>
+
+document.addEventListener('DOMContentLoaded',()=>{
+
+const slider =
+document.getElementById('split-slider-{{ section.id }}');
+
+if(!slider) return;
+
+const slides =
+slider.querySelectorAll('.slider-item');
+
+const nextBtn =
+document.getElementById('next-btn-{{ section.id }}');
+
+const nextThumb =
+document.getElementById('next-thumb-{{ section.id }}');
+
+const progress =
+document.getElementById('progress-{{ section.id }}');
+
+const pagination =
+document.getElementById('pagination-progress-{{ section.id }}');
+
+const currentText =
+document.getElementById('current-{{ section.id }}');
+
+let current = 0;
+
+const totalSlides = slides.length;
+
+const duration = 5000;
+
+const perimeter = 464;
+
+let startTime = null;
+
+let animationFrame;
+
+let isAnimating = false;
+
+/* ================= ACTIVE SLIDE ================= */
+
+function setActiveSlide(index){
+
+slides.forEach((slide,i)=>{
+
+slide.classList.remove('active');
+
+if(i === index){
+
+void slide.offsetWidth;
+
+slide.classList.add('active');
+
+}
+
+});
+
+}
+
+/* ================= PAGINATION ================= */
+
+function updatePagination(){
+
+currentText.textContent =
+String(current + 1).padStart(2,'0');
+
+const percentage =
+((current + 1) / totalSlides) * 100;
+
+pagination.style.width =
+`${percentage}%`;
+
+}
+
+/* ================= THUMB ================= */
+
+function updateThumb(){
+
+const nextIndex =
+(current + 1) % totalSlides;
+
+const nextImage =
+slides[nextIndex]
+.querySelector('.split-bg')
+.style.backgroundImage;
+
+nextThumb.style.backgroundImage =
+nextImage;
+
+}
+
+/* ================= PROGRESS ================= */
+
+function startProgress(){
+
+progress.style.transition = 'none';
+
+progress.style.strokeDashoffset =
+perimeter;
+
+void progress.offsetWidth;
+
+startTime = null;
+
+animationFrame =
+requestAnimationFrame(updateProgress);
+
+}
+
+function updateProgress(timestamp){
+
+if(!startTime){
+
+startTime = timestamp;
+
+}
+
+const elapsed =
+timestamp - startTime;
+
+const progressValue =
+Math.min(elapsed / duration,1);
+
+progress.style.strokeDashoffset =
+perimeter - (progressValue * perimeter);
+
+if(progressValue >= 1){
+
+nextSlide();
+
+}else{
+
+animationFrame =
+requestAnimationFrame(updateProgress);
+
+}
+
+}
+
+/* ================= UI ================= */
+
+function updateUI(){
+
+setActiveSlide(current);
+
+updatePagination();
+
+updateThumb();
+
+startProgress();
+
+}
+
+/* ================= NEXT ================= */
+
+function nextSlide(){
+
+if(isAnimating) return;
+
+isAnimating = true;
+
+cancelAnimationFrame(animationFrame);
+
+current++;
+
+if(current >= totalSlides){
+
+current = 0;
+
+}
+
+updateUI();
+
+setTimeout(()=>{
+
+isAnimating = false;
+
+},1200);
+
+}
+
+/* ================= BUTTON ================= */
+
+nextBtn.addEventListener('click',()=>{
+
+nextSlide();
+
+});
+
+/* ================= INIT ================= */
+
+updateUI();
+
+});
+
+</script>
+
+{% schema %}
+{
+"name":"Split Slider",
+"settings":[],
+"blocks":[
+{
+"type":"slide",
+"name":"Slide",
+"settings":[
+{
+"type":"image_picker",
+"id":"image",
+"label":"Image"
+},
+{
+"type":"text",
+"id":"subtitle",
+"label":"Subtitle",
+"default":"Welcome To TenTwenty Farms"
+},
+{
+"type":"textarea",
+"id":"title",
+"label":"Title",
+"default":"From Our Farms<br>To Your Hands"
+}
+]
+}
+],
+"presets":[
+{
+"name":"Split Slider"
+}
+]
+}
+{% endschema %}

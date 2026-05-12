@@ -1,0 +1,61 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "banner_section_dhw6r4": {
+      "type": "banner-section",
+      "blocks": {
+        "slide_WGLEww": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/3255738d8e0a4f8b807a5a6235350d3b78539454.jpg",
+            "subtitle": "Welcome To TenTwenty Farms",
+            "title": "From Our Farms<br>To Your Hands"
+          }
+        },
+        "slide_6C7m9r": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/a72f2252a93e957af57b10b73de0d286f330f4d0.jpg",
+            "subtitle": "Welcome To TenTwenty Farms",
+            "title": "From Our Farms<br>To Your Hands"
+          }
+        },
+        "slide_R4tJCM": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/ff14a45cd5d557471131860996d0985c3b42c9a4.png",
+            "subtitle": "Welcome To TenTwenty Farms",
+            "title": "From Our Farms<br>To Your Hands"
+          }
+        },
+        "slide_kXY4fR": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/photo-14.avif",
+            "subtitle": "Welcome To TenTwenty Farms",
+            "title": "From Our Farms<br>To Your Hands"
+          }
+        }
+      },
+      "block_order": [
+        "slide_WGLEww",
+        "slide_6C7m9r",
+        "slide_R4tJCM",
+        "slide_kXY4fR"
+      ],
+      "name": "Split Slider",
+      "settings": {}
+    }
+  },
+  "order": [
+    "banner_section_dhw6r4"
+  ]
+}
