@@ -312,7 +312,7 @@
       return start + (end - start) * t;
     }
 
-    function getStyle(pos) {
+    {% comment %} function getStyle(pos) {
 
       const kf = getKf();
 
@@ -335,7 +335,34 @@
         s: lerp(k1.s, k2.s, t),
         o: lerp(k1.o, k2.o, t)
       };
-    }
+    } {% endcomment %}
+
+
+    function getStyle(pos) {
+
+  const kf = getKf();
+
+  if (pos <= -3) return kf['-3'];
+  if (pos >= 3) return kf['3'];
+
+  let lower = Math.floor(pos);
+  let upper = Math.ceil(pos);
+
+  if (lower === upper) return kf[lower];
+
+  let t = pos - lower;
+
+  let k1 = kf[lower];
+  let k2 = kf[upper];
+
+  return {
+    x: lerp(k1.x, k2.x, t),
+    r: lerp(k1.r, k2.r, t),
+    s: lerp(k1.s, k2.s, t),
+    o: lerp(k1.o, k2.o, t)
+  };
+}
+
 
     function updateCards() {
 
