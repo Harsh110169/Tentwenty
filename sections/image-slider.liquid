@@ -241,6 +241,7 @@
       {% endfor %}
     ];
 
+    // START FROM CENTER
     let currentIndex = 1;
 
     const getKf = () => {
@@ -336,7 +337,17 @@
 
       cards.forEach((card, i) => {
 
+        // INFINITE RELATIVE POSITION
         let rel = i - currentIndex;
+
+        // HANDLE LOOP POSITIONS
+        if (rel > cards.length / 2) {
+          rel -= cards.length;
+        }
+
+        if (rel < -cards.length / 2) {
+          rel += cards.length;
+        }
 
         let style = getStyle(rel);
 
@@ -368,17 +379,20 @@
         }
       });
 
+      const safeIndex =
+        ((currentIndex % cards.length) + cards.length) % cards.length;
+
       const nameEl =
         document.getElementById(`client-name-${sectionId}`);
 
       const locEl =
         document.getElementById(`client-loc-${sectionId}`);
 
-      nameEl.innerText = slidesData[currentIndex].name;
-      locEl.innerText = slidesData[currentIndex].loc;
+      nameEl.innerText = slidesData[safeIndex].name;
+      locEl.innerText = slidesData[safeIndex].loc;
     }
 
-    // Drag Logic
+    // DRAG LOGIC
 
     let isDragging = false;
     let startX = 0;
@@ -427,6 +441,15 @@
 
         let rel = i - currentIndex;
 
+        // HANDLE LOOP POSITIONS
+        if (rel > cards.length / 2) {
+          rel -= cards.length;
+        }
+
+        if (rel < -cards.length / 2) {
+          rel += cards.length;
+        }
+
         let pos = rel + progress;
 
         let style = getStyle(pos);
@@ -451,11 +474,23 @@
       const threshold =
         window.innerWidth < 768 ? 50 : 100;
 
-      if (diff > threshold && currentIndex > 0) {
+      // PREVIOUS
+      if (diff > threshold) {
         currentIndex--;
       }
-      else if (diff < -threshold && currentIndex < cards.length - 1) {
+
+      // NEXT
+      else if (diff < -threshold) {
         currentIndex++;
+      }
+
+      // INFINITE INDEX
+      if (currentIndex < 0) {
+        currentIndex = cards.length - 1;
+      }
+
+      if (currentIndex >= cards.length) {
+        currentIndex = 0;
       }
 
       cards.forEach(card => {
