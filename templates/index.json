@@ -57,6 +57,14 @@
     "image_slider_yX4Jb9": {
       "type": "image-slider",
       "blocks": {
+        "slide_PW4yKx": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/8f78f5452c06cf20973a3a45f5be4b527cd28d57.png",
+            "client_name": "Client Name 4",
+            "client_location": "Dubai, United Arab Emirates"
+          }
+        },
         "slide_cmwwgF": {
           "type": "slide",
           "settings": {
@@ -81,14 +89,6 @@
             "client_location": "Dubai, United Arab Emirates"
           }
         },
-        "slide_PW4yKx": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/8f78f5452c06cf20973a3a45f5be4b527cd28d57.png",
-            "client_name": "Client Name 4",
-            "client_location": "Dubai, United Arab Emirates"
-          }
-        },
         "slide_micAYw": {
           "type": "slide",
           "settings": {
@@ -99,10 +99,10 @@
         }
       },
       "block_order": [
+        "slide_PW4yKx",
         "slide_cmwwgF",
         "slide_6d69TJ",
         "slide_FyezBV",
-        "slide_PW4yKx",
         "slide_micAYw"
       ],
       "name": "Quality Products Slider",
