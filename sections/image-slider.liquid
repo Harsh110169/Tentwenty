@@ -241,96 +241,96 @@
       {% endfor %}
     ];
 
-    let currentIndex = 0;
-
+    let currentIndex = 1;
 
     const getKf = () => {
-  const isMobile = window.innerWidth < 768;
 
-  return {
-    '-3': {
-      x: isMobile ? -180 : -220,
-      r: -25,
-      s: 0.7,
-      o: 0
-    },
+      const isMobile = window.innerWidth < 768;
 
-    '-2': {
-      x: isMobile ? -120 : -140,
-      r: -18,
-      s: 0.82,
-      o: 0
-    },
+      return {
 
-    '-1': {
-  x: isMobile ? -125 : -135,
-  r: -10,
-  s: 0.92,
-  o: 1
-},
+        '-3': {
+          x: isMobile ? -260 : -380,
+          r: -25,
+          s: 0.7,
+          o: 0
+        },
 
+        '-2': {
+          x: isMobile ? -200 : -280,
+          r: -18,
+          s: 0.82,
+          o: 0
+        },
 
-    '0': {
-      x: 0,
-      r: 0,
-      s: 1,
-      o: 1
-    },
+        // LEFT SLIDE
+        '-1': {
+          x: isMobile ? -115 : -150,
+          r: -10,
+          s: 0.92,
+          o: 1
+        },
 
-    '1': {
-  x: isMobile ? 125 : 135,
-  r: 10,
-  s: 0.92,
-  o: 1
-},
+        // CENTER SLIDE
+        '0': {
+          x: 0,
+          r: 0,
+          s: 1,
+          o: 1
+        },
 
-    '2': {
-      x: isMobile ? 120 : 140,
-      r: 18,
-      s: 0.82,
-      o: 0
-    },
+        // RIGHT SLIDE
+        '1': {
+          x: isMobile ? 115 : 150,
+          r: 10,
+          s: 0.92,
+          o: 1
+        },
 
-    '3': {
-      x: isMobile ? 180 : 220,
-      r: 25,
-      s: 0.7,
-      o: 0
-    }
-  };
-};
+        '2': {
+          x: isMobile ? 200 : 280,
+          r: 18,
+          s: 0.82,
+          o: 0
+        },
+
+        '3': {
+          x: isMobile ? 260 : 380,
+          r: 25,
+          s: 0.7,
+          o: 0
+        }
+      };
+    };
 
     function lerp(start, end, t) {
       return start + (end - start) * t;
     }
 
-   
-
     function getStyle(pos) {
 
-  const kf = getKf();
+      const kf = getKf();
 
-  if (pos <= -3) return kf['-3'];
-  if (pos >= 3) return kf['3'];
+      if (pos <= -3) return kf['-3'];
+      if (pos >= 3) return kf['3'];
 
-  let lower = Math.floor(pos);
-  let upper = Math.ceil(pos);
+      let lower = Math.floor(pos);
+      let upper = Math.ceil(pos);
 
-  if (lower === upper) return kf[lower];
+      if (lower === upper) return kf[lower];
 
-  let t = pos - lower;
+      let t = pos - lower;
 
-  let k1 = kf[lower];
-  let k2 = kf[upper];
+      let k1 = kf[lower];
+      let k2 = kf[upper];
 
-  return {
-    x: lerp(k1.x, k2.x, t),
-    r: lerp(k1.r, k2.r, t),
-    s: lerp(k1.s, k2.s, t),
-    o: lerp(k1.o, k2.o, t)
-  };
-}
-
+      return {
+        x: lerp(k1.x, k2.x, t),
+        r: lerp(k1.r, k2.r, t),
+        s: lerp(k1.s, k2.s, t),
+        o: lerp(k1.o, k2.o, t)
+      };
+    }
 
     function updateCards() {
 
